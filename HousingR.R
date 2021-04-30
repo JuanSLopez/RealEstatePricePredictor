@@ -706,6 +706,19 @@ dataset$Exterior1st = as.numeric(dataset$Exterior1st)
 datasets <- unclass(dataset)
 
 
+
+#Standardize SalePrice
+
+xbar = mean(dataset$SalePrice)
+xbar
+
+sde = sd(dataset$SalePrice)
+sde
+
+dataset$SalePrice = (dataset$SalePrice-xbar)/sde
+
+#
+
 sum(is.na(dataset))
 colSums(is.na(dataset))
 dataset <- na.omit(dataset)
@@ -787,10 +800,10 @@ scatter.smooth(OverallQual,SalePrice,main = 'Linear Relation',lpars = list(col='
 
 
 
-#Splitting dataset in training and testing using validation set 50/50
+#Splitting dataset in training and testing using validation set 70/30
 dataset <- subset(dataset,select=-c(TotalBsmtSF,GrLivArea,Utilities))
 numSamples = dim(dataset)[1]
-train = sample(numSamples,numSamples*0.5)
+train = sample(numSamples,numSamples*0.7)
 training_set = dataset[train,]
 testing_set = dataset[-train,]
 
